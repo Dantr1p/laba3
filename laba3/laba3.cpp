@@ -3,11 +3,13 @@
 #include <Windows.h>
 #include <string>
 #include <conio.h>
+#include <malloc.h>
 
 using namespace std;
 
 class laptop
 {
+private:
 	string model;	//модель ноутбука
 	int RAM_size;// объем оперативной памяти
 	int CPU_frequency; //частота процессора
@@ -20,7 +22,7 @@ public:
 	void set_laptop(string model, int ram, int cpu, double price, int year);
 	void print_laptop();
 	void add_price(laptop a);
-	void compare_laptop(laptop a);
+	void compare_laptop(laptop a);	
 };
 
 laptop::laptop()
@@ -144,6 +146,24 @@ void laptop::compare_laptop(laptop a)
     }
 }
 
+void init(laptop a)
+{
+	string model = "";
+	int cpu = 0, ram = 0, year = 0;
+	double price = 0;
+	cout << "Введите модель ноутбука: " << endl;
+	cin >> model;
+	cout << "Объем оперативной памяти(гб): " << endl;
+	cin >> ram;
+	cout << "Введите частоту процессора: " << endl;
+	cin >> cpu;
+	cout << "Введите стоимость ноутбука: " << endl;
+	cin >> price;
+	cout << "Введите год производства ноутбука: " << endl;
+	cin >> year;
+	a.set_laptop(model, ram, cpu, price, year);
+}
+
 
 int main()
 {
@@ -153,72 +173,27 @@ int main()
 	laptop obj1;
 	laptop obj2("Asus NITRO 5", 8, 3500, 75000, 2020);		
 	obj1.set_laptop("Asus Zenbook", 4, 2500, 42000, 2017);
+
 	
-	do {
-		system("cls");
-		cout << "MENU" << endl;
-		cout << "1. Заполнить данные о первом ноутбуке" << endl;
-		cout << "2. Заполнить данные о втором ноутбуке" << endl;
-		cout << "3. Подсчитать общую стоимость ноутбуков" << endl;
-		cout << "4. Сравнить ноутбуки" << endl;	
-		cout << "5. Выход" << endl;
-		cout << "В какой пункт хотите перейти?" << endl;
+	obj1.print_laptop();		
+	obj2.print_laptop();
+	obj1.add_price(obj2);
+	obj1.compare_laptop(obj2);	
+	laptop* obj3 = new laptop;
+	obj3->set_laptop("Asus NITRO 6", 16, 4500, 100000, 2023);
+	obj3->print_laptop();
+	delete obj3;
+	cout << "Введите количество ноутбуков"<<endl;
+	int n;
+	cin >> n;
+	laptop* newpart = new laptop[n];
+	for (int i = 0; i < n; i++)
+	{
+		cout <<"Адрес ноутбука № "<<i+1<<" "<< &newpart[i]<<endl;
+	}
+	delete[] newpart;
 
-		string model="";
-		int cpu=0, ram=0, year=0;
-		double price=0;
-		switch (_getch())
-		{
-		case 49:
-			system("cls");
-			cout << "Введите модель ноутбука: " << endl;
-			cin >> model;
-			cout << "Объем оперативной памяти(гб): " << endl;
-			cin >> ram;
-			cout << "Введите частоту процессора: " << endl;
-			cin >> cpu;
-			cout << "Введите стоимость ноутбука: " << endl;
-			cin >> price;
-			cout << "Введите год производства ноутбука: " << endl;
-			cin >> year;
-			obj1.set_laptop(model, ram, cpu, price, year);
-			obj1.print_laptop();
-			break;
-		case 50:
-			system("cls");
-			cout << "Введите модель ноутбука: " << endl;
-			cin >> model;
-			cout << "Объем оперативной памяти(гб): " << endl;
-			cin >> ram;
-			cout << "Введите частоту процессора: " << endl;
-			cin >> cpu;
-			cout << "Введите стоимость ноутбука: " << endl;
-			cin >> price;
-			cout << "Введите год производства ноутбука: " << endl;
-			cin >> cpu;
-			obj2.set_laptop(model, ram, cpu, price, year);
-			obj2.print_laptop();
-			break;
-		case 51:
-			system("cls");
-			obj1.add_price(obj2);
-			break;
-		case 52:
-			system("cls");
-			obj1.compare_laptop(obj2);
-			break;
-		case 53:
-			goto exit;
-			break;		
-		default:
-			system("cls");
-			cout << "Вы выбрали несуществующий вариант" << endl;
-			cout << "Если хотите выйти, то нажмите ESC. В противном случае перейдёте в MENU" << endl;
-			break;
-		}
-	} while (_getch() != 27);
-exit:
-
+	
 	return 0;
 
 }
