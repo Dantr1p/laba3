@@ -20,6 +20,7 @@ class laptop
 	void set_laptop(string model, int ram, int cpu, double price, int year);
 	void print_laptop();
 	void add_price(laptop a);
+	void compare_laptop(laptop a);
 };
 
 laptop::laptop()
@@ -69,6 +70,78 @@ void laptop::add_price(laptop a)
 	double sumprice = 0;
 	sumprice = this->price + a.price;
 	cout << "Суммарная цена=" << sumprice;	
+}
+
+void laptop::compare_laptop(laptop a)
+{
+    int ram, cpu, year;
+    double price;
+    cout <<"Сравниваем ноутбуки "<<this->model<<" и "<<a.model);
+
+    // сравниваем по ram
+    if (this->RAM_size > a.RAM_size)
+    {
+        ram = this->RAM_size - a.RAM_size;
+        cout<<"Оперативная память ноутбука "<< this->model<<" больше оперативной памяти ноутбука "<<a.model<<" на "<< ram<<" гб."
+    }
+    if (this->RAM_size < a.RAM_size)
+    {
+        ram = a.RAM_size- this->RAM_size;
+        cout << "Оперативная память ноутбука " << a.model << " больше оперативной памяти ноутбука " << this->model << " на " << ram << " гб."
+    }
+    if (this->RAM_size == a.RAM_size)
+    {
+       
+        cout << "Оперативная память ноутбуков совпадает и = " << this->RAM_size<< " гб.";
+    }
+    // сравниваем по частоте
+    if (this->CPU_frequency > a.CPU_frequency)
+    {
+        cpu = this->CPU_frequency - a.CPU_frequency;
+        cout << "Частота процессора ноутбука " << this->model << " больше частоты процессора ноутбука " << a.model << " на " << cpu << " гц."
+    }
+    if (this->CPU_frequency < a.CPU_frequency)
+    {
+        cpu = a.CPU_frequency - this->CPU_frequency;
+        cout << "Частота процессора ноутбука " << a.model << " больше частоты процессора ноутбука " << this->model << " на " << cpu << " гц."
+    }
+    if (this->RAM_size == a.RAM_size)
+    {
+
+        cout << "Частоты процессоров ноутбуков совпадают и = " << this->CPU_frequency<< " гц.";
+    }
+    // сравниваем по цене
+    if (this->price > a.price)
+    {
+        price = this->price - a.price;
+        cout << "Цена ноутбука " << this->model << " больше цены ноутбука " << a.model << " на " << price << " р."
+    }
+    if (this->price < a.price)
+    {
+        price = a.price - this->price;
+        cout << "Цена ноутбука " << a.model << " больше цены ноутбука " << this->model << " на " << price << " р."
+    }
+    if (this->price == a.price)
+    {
+
+        cout << "Цены ноутбуков совпадают и = " << this->price<<" р.";
+    }
+    // сравниваем по году выпуска
+    if (this->year > a.year)
+    {
+        year = this->year - a.year;
+        cout << "Год выпуска ноутбука " << this->model << " позже года выпуска ноутбука " << a.model << " на " << year << " г."
+    }
+    if (this->year < a.year)
+    {
+        year = a.year - this->year;
+        cout << "Год выпуска ноутбука " << a.model << " позже года выпуска ноутбука " << this->model << " на " << year << " г."
+    }
+    if (this->year == a.year)
+    {
+
+        cout << "Годы выпуска ноутбуков совпадают и = " << this->year <<" г.";
+    }
 }
 
 
