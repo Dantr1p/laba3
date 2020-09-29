@@ -21,6 +21,47 @@ class laptop
 	void print_laptop();
 };
 
+laptop::laptop()
+{
+	model = "";
+	RAM_size = 0;
+	CPU_frequency = 0;
+	price = 0;
+	year = 0;
+}
+
+laptop::laptop(string model, int ram, int cpu, double price, int year)
+{
+	this->model = model;
+	RAM_size = ram;
+	CPU_frequency = cpu;
+	this->price = price;
+	this->year = year;
+}
+
+laptop::~laptop()
+{
+	printf("Ноутбук разрушен");
+}
+
+void laptop::set_laptop(string model, int ram, int cpu, double price, int year)
+{
+	this->model = model;
+	RAM_size = ram;
+	CPU_frequency = cpu;
+	this->price = price;
+	this->year = year;
+}
+
+void laptop::print_laptop()
+{
+	cout << "Модель ноутбука: " << model << endl;
+	cout << "Объем оперативной памяти: " << RAM_size << endl;
+	cout << "Частота процессора: " << CPU_frequency << endl;
+	cout << "Цена ноутбука: " << price << endl;
+	cout << "Год производства: " << year << endl;
+
+}
 
 
 int main()
