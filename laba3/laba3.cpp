@@ -19,6 +19,7 @@ class laptop
 	~laptop();
 	void set_laptop(string model, int ram, int cpu, double price, int year);
 	void print_laptop();
+	void add_price(laptop a);
 };
 
 laptop::laptop()
@@ -61,6 +62,13 @@ void laptop::print_laptop()
 	cout << "Цена ноутбука: " << price << endl;
 	cout << "Год производства: " << year << endl;
 
+}
+
+void laptop::add_price(laptop a)
+{
+	double sumprice = 0;
+	sumprice = this->price + a.price;
+	cout << "Суммарная цена=" << sumprice;	
 }
 
 
