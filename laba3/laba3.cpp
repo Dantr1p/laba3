@@ -14,11 +14,7 @@ class laptop
 	double price;// цена ноутбука
 	int year;// Год производства
 //public:
-	laptop();
-	laptop(string model, int ram, int cpu, double price, int year);
-	~laptop();
-	void set_laptop(string model, int ram, int cpu, double price, int year);
-	void print_laptop();
+	
 };
  
 
