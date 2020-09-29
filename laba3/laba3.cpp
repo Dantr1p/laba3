@@ -193,7 +193,12 @@ int main()
 	}
 	delete[] newpart;
 
-	
+	laptop* buffer1 = (laptop*)malloc(10 * sizeof(laptop)),      // выделяем память под 10 элементов массива типа int, с предварительной инициализацией   
+		* buffer2 = (laptop*)calloc(10, sizeof(laptop)),        // выделяем память под 10 элементов массива типа int, без инициализации
+		* buffer3 = (laptop*)realloc(buffer2, 50 * sizeof(laptop));// перераспределить память в блоке buffer2, новый размер блока - 50 элементов
+
+	free(buffer1);                                              // высвобождаем блок памяти buffer1
+	free(buffer3);
 	return 0;
 
 }
