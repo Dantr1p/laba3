@@ -294,10 +294,10 @@ int main()
 		cout << "5. Сравнить все ноутбуки (max, min)(static)" << endl;
 		cout << "6. Ввести данные (dynamic)" << endl;
 		cout << "7. Вывести данные(dynamic)" << endl;
-		cout << "3. Подсчитать стоимость ноутбуков(dynamic)" << endl;
-		cout << "4. Сравнить два ноутбука(dynamic)" << endl;
-		cout << "5. Сравнить все ноутбуки (max, min)(dynamic)" << endl;
-		cout << "8. Выход" << endl;
+		cout << "8. Подсчитать стоимость ноутбуков(dynamic)" << endl;
+		cout << "9. Сравнить два ноутбука(dynamic)" << endl;
+		cout << "0. Сравнить все ноутбуки (max, min)(dynamic)" << endl;
+		cout << "Backspace. Выход" << endl;
 		cout << "В какой пункт хотите перейти?" << endl;
 		switch (_getch())
 		{
@@ -359,16 +359,56 @@ int main()
 		case 54:
 		{
 			system("cls");
-			
+			cout << "Введите количество ноутбуков" << endl;
+			cin >> n;
+			for (int i = 0; i < n; i++)
+			{
+				cout << "Введите модель: " << endl;
+				cin >> model;
+				cout << "Введите объем оперативной памяти: " << endl;
+				cin >> ram;
+				cout << "Введите частоту процессора: " << endl;
+				cin >> cpu;
+				cout << "Введите цену: " << endl;
+				cin >> price;
+				cout << "Введите год производства: " << endl;
+				cin >> year;
+				lap2[i].set_laptop(model, ram, cpu, price, year);
+			}
 			break;
 		}
 		case 55:
 		{
 			system("cls");
-
-			break;
+			for (int i = 0; i < n; i++)
+			{
+				lap2[i].print_laptop();
+			}
 		}
 		case 56:
+		{
+			system("cls");
+			add_price(lap2, n);
+			break;
+		}
+		case 57:
+		{
+			int n1, n2;
+			system("cls");
+			cout << "Укажите номер первого ноутбука:";
+			cin >> n1;
+			cout << "Укажите номер второго ноутбука:";
+			cin >> n2;
+			compare2(lap2[n1 - 1], lap2[n2 - 1]);
+			break;
+		}
+		case 48:
+		{
+			system("cls");
+			compare_laptop(lap2, n);
+			break;
+		}
+		case 8:
 			goto exit;
 		default:
 			system("cls");
@@ -378,8 +418,9 @@ int main()
 		}
 	} while (_getch() != 27);
 exit:
+	
 	delete[] lap;
-
+	delete[] lap2;
 	laptop* buffer1 = (laptop*)malloc(10 * sizeof(laptop)),      // выделяем память под 10 элементов массива типа int, с предварительной инициализацией   
 	* buffer2 = (laptop*)calloc(10, sizeof(laptop)),        // выделяем память под 10 элементов массива типа int, без инициализации
 	* buffer3 = (laptop*)realloc(buffer2, 50 * sizeof(laptop));// перераспределить память в блоке buffer2, новый размер блока - 50 элементов
