@@ -20,9 +20,12 @@ public:
 	laptop(string model, int ram, int cpu, double price, int year);
 	~laptop();
 	void set_laptop(string model, int ram, int cpu, double price, int year);
-	void print_laptop();
-	void add_price(laptop a);
-	void compare_laptop(laptop a);	
+	void print_laptop();	
+	string getmodel();
+	int getram();
+	int getcpu();
+	int getyear();
+	double getprice();
 };
 
 laptop::laptop()
@@ -67,85 +70,121 @@ void laptop::print_laptop()
 
 }
 
-void laptop::add_price(laptop a)
+string laptop::getmodel()
+{
+	return string();
+}
+
+int laptop::getram()
+{
+	return RAM_size;
+}
+
+int laptop::getcpu()
+{
+	return CPU_frequency;
+}
+
+int laptop::getyear()
+{
+	return year;
+}
+
+double laptop::getprice()
+{
+	return price;
+}
+
+void add_price(laptop a[],int n)
 {
 	double sumprice = 0;
-	sumprice = this->price + a.price;
+	for (int i = 0; i < n; i++)
+	{
+		sumprice =  sumprice +a[i].getprice();
+	}
 	cout << "Суммарная цена=" << sumprice<< endl;	
 }
 
-void laptop::compare_laptop(laptop a)
+void compare_laptop(laptop a[],int  n)
 {
     int ram, cpu, year;
     double price;
-    cout <<"Сравниваем ноутбуки "<<this->model<<" и "<<a.model << endl;
-
-    // сравниваем по ram
-    if (this->RAM_size > a.RAM_size)
-    {
-        ram = this->RAM_size - a.RAM_size;
-		cout << "Оперативная память ноутбука " << this->model << " больше оперативной памяти ноутбука " << a.model << " на " << ram << " гб." << endl;
-    }
-    if (this->RAM_size < a.RAM_size)
-    {
-        ram = a.RAM_size- this->RAM_size;
-		cout << "Оперативная память ноутбука " << a.model << " больше оперативной памяти ноутбука " << this->model << " на " << ram << " гб." << endl;
-    }
-    if (this->RAM_size == a.RAM_size)
-    {
-       
-        cout << "Оперативная память ноутбуков совпадает и = " << this->RAM_size<< " гб." << endl;
-    }
-    // сравниваем по частоте
-    if (this->CPU_frequency > a.CPU_frequency)
-    {
-        cpu = this->CPU_frequency - a.CPU_frequency;
-		cout << "Частота процессора ноутбука " << this->model << " больше частоты процессора ноутбука " << a.model << " на " << cpu << " гц." << endl;
-    }
-    if (this->CPU_frequency < a.CPU_frequency)
-    {
-        cpu = a.CPU_frequency - this->CPU_frequency;
-		cout << "Частота процессора ноутбука " << a.model << " больше частоты процессора ноутбука " << this->model << " на " << cpu << " гц." << endl;
-    }
-    if (this->RAM_size == a.RAM_size)
-    {
-
-        cout << "Частоты процессоров ноутбуков совпадают и = " << this->CPU_frequency<< " гц." << endl;
-    }
-    // сравниваем по цене
-    if (this->price > a.price)
-    {
-        price = this->price - a.price;
-		cout << "Цена ноутбука " << this->model << " больше цены ноутбука " << a.model << " на " << price << " р." << endl;
-    }
-    if (this->price < a.price)
-    {
-        price = a.price - this->price;
-		cout << "Цена ноутбука " << a.model << " больше цены ноутбука " << this->model << " на " << price << " р." << endl;
-    }
-    if (this->price == a.price)
-    {
-
-        cout << "Цены ноутбуков совпадают и = " << this->price<<" р." << endl;
-    }
-    // сравниваем по году выпуска
-    if (this->year > a.year)
-    {
-        year = this->year - a.year;
-		cout << "Год выпуска ноутбука " << this->model << " позже года выпуска ноутбука " << a.model << " на " << year << " г." << endl;
-    }
-    if (this->year < a.year)
-    {
-        year = a.year - this->year;
-		cout << "Год выпуска ноутбука " << a.model << " позже года выпуска ноутбука " << this->model << " на " << year << " г." << endl;
-    }
-    if (this->year == a.year)
-    {
-
-        cout << "Годы выпуска ноутбуков совпадают и = " << this->year <<" г." << endl;
-    }
+	for (int i = 0; i < n; i++)
+	{
+		cout << "*******************************";
+		cout << "Сравниваем ноутбуки " << a[i].getmodel() << endl;
+	}
+	cout << "*******************************";
+    
 }
 
+void compare2(laptop a1, laptop a)
+{
+	if (a1.getram() > a.getram())
+	{
+		ram = a1.getram() - a.getram();
+		cout << "Оперативная память ноутбука " << a1.getmodel() << " больше оперативной памяти ноутбука " << a.getmodel() << " на " << ram << " гб." << endl;
+	}
+	if (a1.getram() < a.getram())
+	{
+		ram = a.getram() - a1.getram();
+		cout << "Оперативная память ноутбука " << a.getmodel() << " больше оперативной памяти ноутбука " << a1.getmodel() << " на " << ram << " гб." << endl;
+	}
+	if (a1.getram() == a.getram())
+	{
+
+		cout << "Оперативная память ноутбуков совпадает и = " << a.getram() << " гб." << endl;
+	}
+	// сравниваем по частоте
+	if (a1.getcpu() > a.getcpu())
+	{
+		cpu = a1.getcpu() - a.getcpu();
+		cout << "Частота процессора ноутбука " << a1.getmodel() << " больше частоты процессора ноутбука " << a.getmodel() << " на " << cpu << " гц." << endl;
+	}
+	if (a1.getcpu() < a.getcpu())
+	{
+		cpu = a.getcpu() - a1.getcpu();
+		cout << "Частота процессора ноутбука " << a.getmodel() << " больше частоты процессора ноутбука " << a1.getmodel() << " на " << cpu << " гц." << endl;
+	}
+	if (a1.getram() == a.getram())
+	{
+
+		cout << "Частоты процессоров ноутбуков совпадают и = " << a1.getram() << " гц." << endl;
+	}
+	// сравниваем по цене
+	if (a1.getprice() > a.getprice())
+	{
+		price = a1.price - a.getprice();
+		cout << "Цена ноутбука " << a1.getmodel() << " больше цены ноутбука " << a.getmodel() << " на " << price << " р." << endl;
+	}
+	if (a1.getprice() < a.getprice())
+	{
+		price = a.getprice() - a1.getprice();
+		cout << "Цена ноутбука " << a.getmodel() << " больше цены ноутбука " << a1.getmodel() << " на " << price << " р." << endl;
+	}
+	if (a1.getprice() == a.getprice())
+	{
+
+		cout << "Цены ноутбуков совпадают и = " << a1.getprice() << " р." << endl;
+	}
+	// сравниваем по году выпуска
+	if (a1.getyear() > a.getyear())
+	{
+		year = a1.getyear() - a.getyear();
+		cout << "Год выпуска ноутбука " << a1.getmodel() << " позже года выпуска ноутбука " << a.getmodel() << " на " << year << " г." << endl;
+	}
+	if (a1.getyear() < a.getyear())
+	{
+		year = a.getyear() - a1.getyear();
+		cout << "Год выпуска ноутбука " << a.getmodel() << " позже года выпуска ноутбука " << a1.getmodel() << " на " << year << " г." << endl;
+	}
+	if (a1.getyear() == a.getyear())
+	{
+
+		cout << "Годы выпуска ноутбуков совпадают и = " << a1.getyear() << " г." << endl;
+	}
+}
+}
 void init(laptop a)
 {
 	string model = "";
@@ -199,6 +238,72 @@ int main()
 
 	free(buffer1);                                              // высвобождаем блок памяти buffer1
 	free(buffer3);
+
+	string model;
+	int ram, cpu, year, n;
+	double price;
+	do {
+		system("cls");
+		cout << "MENU" << endl;
+		cout << "1. Заполнить данные о ноутбуках" << endl;
+		cout << "2. Вывести данные" << endl;
+		cout << "3. Подсчитать стоимость ноутбуков" << endl;
+		cout << "4. Сравнить ноутбуки" << endl;
+		cout << "5. " << endl;
+		cout << "6. " << endl;
+		cout << "7. Выход" << endl;
+		cout << "В какой пункт хотите перейти?" << endl;
+		switch (_getch())
+		{
+		case 49:
+			system("cls");	
+			cout << "Введите количество ноутбуков" << n << endl;
+			laptop* lap = new laptop[n];
+			for (int i = 0; i < n; i++)
+			{
+				cout << "Введите модель: " << model << endl;
+				cout << "Введите объем оперативной памяти: " << model << endl;
+				cout << "Введите частоту процессора: " << model << endl;
+				cout << "Введите цену: " << model << endl;
+				cout << "Введите год производства: " << model << endl;
+				lap[i].set_laptop(model, ram, cpu, price, year);
+			}
+			break;
+		case 50:
+			system("cls");
+			for (int i = 0; i < n; i++)
+			{
+				lap[i].print_laptop();
+			}
+			break;
+		case 51:
+			system("cls");
+			
+			break;
+		case 52:
+			system("cls");
+			
+			break;
+		case 53:
+			system("cls");
+			
+			break;
+		case 54:
+			system("cls");
+			
+			break;
+		case 55:
+			goto exit;
+		default:
+			system("cls");
+			cout << "Вы выбрали несуществующий вариант" << endl;
+			cout << "Если хотите выйти, то нажмите ESC. В противном случае перейдёте в MENU" << endl;
+			break;
+		}
+	} while (_getch() != 27);
+exit:
+
+
 	return 0;
 
 }
