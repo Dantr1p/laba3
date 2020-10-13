@@ -92,26 +92,30 @@ public:
 		n = 0;
 		cash = 0;
 	};	
-	Shop(string name, int n, int cash, Laptop laptop)
-	{
-		this->name = name;
-		this->n = n;
-		this->cash = cash;
-		for (int i = 0; i < N; i++)
-		{
-			this->laptop[i] = laptop;
-		}
-	};
+	
 	Shop(string name, int n,int cash, Laptop laptop[N])
 	{	
 		this->name = name;
 		this->n = n;
 		this->cash = cash;
-		for (int i = 0; i < N; i++)
+		for (int i = 0; i < n; i++)
 		{
 			this->laptop[i] = laptop[i];
 		}		
 	};
+
+	Shop(string name, int n, int cash, Laptop laptop)
+	{
+		int i = 0;
+		this->name = name;
+		this->n = n;
+		this->cash = cash;		
+		this->laptop[i] = laptop;		
+	};
+	Laptop getlaptop(int n)
+	{
+		return laptop[n];
+	}
 	~Shop()
 	{	
 	};
@@ -127,7 +131,7 @@ public:
 		}
 	};
 
-	void print_shop()
+	void print_shop(int n)
 	{
 		cout << "Название магазина: " << name << endl;
 		cout << "Количество моделей ноутбуков: " << n << endl;
@@ -137,9 +141,12 @@ public:
 		{
 			cout << i + 1 << ": " << laptop[i].getmodel() <<" Цена: "<<laptop[i].getprice() << endl;
 		}
+		cout << endl;
 	}
-	void purchase()
+
+	int purchase()
 	{
+		cout << "\tПокупаем ноутбук" << endl;
 		Laptop a;
 		string model;
 		int ram, cpu, year;
@@ -159,18 +166,22 @@ public:
 		this->laptop[n]=a;
 		n = n + 1;
 		cash = cash - price;
-		
+		cout << endl;
+		return n;
 		
 	};
-	void sale()
+	int sale(int n)
 	{
+		cout << "\tПродаем" << endl;
 		for (int i = 0; i <= n; i++)
 		{
 			cash += laptop[i].getprice();			
 			n -= 1;
 			cout << laptop[i].getmodel()<<" продан!" << endl;
 		}
-
+		n = 0;
+		cout << endl;
+		return n;
 	}
 };
 
@@ -186,9 +197,9 @@ void add_price(Laptop a[],int n)
 }
 void add_price(Laptop a1, Laptop a2)
 {
-	cout << "Суммарная цена=" << a1.getprice() + a2.getprice();
+	cout << "Суммарная цена=" << a1.getprice() + a2.getprice() << endl;
 }
-void compare_laptop(Laptop a[],int  n)
+void compare(Laptop a[],int  n)
 {
     
 	cout << "*******************************"<<endl;
@@ -259,7 +270,7 @@ void compare_laptop(Laptop a[],int  n)
 	cout << "Самый старый ноутбук " << minyear << " г." << endl;
 }
 
-void compare2(Laptop a1, Laptop a)
+void compare(Laptop a1, Laptop a)
 {
 	int ram, cpu, year;
 	double price;
@@ -330,7 +341,7 @@ void compare2(Laptop a1, Laptop a)
 	}
 }
 
-void init(Laptop a)
+/*void init(Laptop a)
 {
 	string model = "";
 	int cpu = 0, ram = 0, year = 0;
@@ -346,7 +357,7 @@ void init(Laptop a)
 	cout << "Введите год производства ноутбука: " << endl;
 	cin >> year;
 	a.set_laptop(model, ram, cpu, price, year);
-}
+}*/
 
 
 int main()
@@ -354,31 +365,90 @@ int main()
 	system("color f0");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	int n = 0;
+	int n = 1;
 	double cash = 0;
-	cout << "Работа со статическим объектом" << endl;
+	cout << "\tРабота со статическим объектом" << endl;
 	Laptop lap1("Acer", 4, 2500, 35000, 2015);
 	cash = lap1.getprice() + cash;
 	Shop store("DND", 1, 0, lap1);
-	store.print_shop();
-	store.purchase();
-	store.print_shop();
-	store.sale();
-	store.print_shop();
-
-	cout << endl << "Работа с динамическими объектами!" << endl;
+	store.print_shop(n);
+	n=store.purchase();	
+	store.print_shop(n);
+	add_price(store.getlaptop(0), store.getlaptop(1));
+	compare(store.getlaptop(0), store.getlaptop(1));
+	n=store.sale(n);
+	store.print_shop(n);
+	
+	cout  <<endl << "\n\tРабота с динамическими объектами!" << endl;
 	Laptop* lap2 = new Laptop("Samsung",8,3500, 80000, 2019);
-	add_price(lap1, *lap2);
-	Shop* store1 = new Shop("Svideo", 1, 0, lap2);
-	store1->print_shop();
-	store1->purchase();
-	store1->print_shop();
-	store1->sale();
-	store1->print_shop();
+		Shop* store1 = new Shop("Svideo", 1, 0, lap2);
+	store1->print_shop(n);
+	n=store1->purchase();
+	store1->print_shop(n);
+	n=store1->sale();
+	store1->print_shop(n);
 	delete lap2;
 	delete store1;
-	cout << endl << "Работа с массивом статических объектов!" << endl;
-	cout << endl << "Работа с массивом динамических объектов!" << endl;
+	n = 0;
+	cout << endl << "\n\tРабота с массивом статических объектов!" << endl;
+	Laptop lap3[N];
+	cout<<"Введите количество ноутбуков: "<< endl;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		string model = "";
+	int cpu = 0, ram = 0, year = 0;
+	double price = 0;
+	cout << "Введите модель ноутбука: " << endl;
+	cin >> model;
+	cout << "Объем оперативной памяти(гб): " << endl;
+	cin >> ram;
+	cout << "Введите частоту процессора: " << endl;
+	cin >> cpu;
+	cout << "Введите стоимость ноутбука: " << endl;
+	cin >> price;
+	cout << "Введите год производства ноутбука: " << endl;
+	cin >> year;
+	lap3[i].set_laptop(model, ram, cpu, price, year);
+	}
+	add_price(lap3, n);
+	Shop* store2= new Shop("DNM", n, 0, lap3);
+	store2->print_shop(n);
+	n=store2->purchase(); //
+	store2->print_shop(n);
+	n=store2->sale(n);
+	store2->print_shop(n);	
+	delete store2;
+	cout << endl << "\n\tРабота с массивом динамических объектов!" << endl;
+	cout << "Введите количество ноутбуков: " << endl;
+	cin >> n;
+	Laptop* lap4 = new Laptop[n];
+	for (int i = 0; i < n; i++)
+	{
+		string model = "";
+		int cpu = 0, ram = 0, year = 0;
+		double price = 0;
+		cout << "Введите модель ноутбука: " << endl;
+		cin >> model;
+		cout << "Объем оперативной памяти(гб): " << endl;
+		cin >> ram;
+		cout << "Введите частоту процессора: " << endl;
+		cin >> cpu;
+		cout << "Введите стоимость ноутбука: " << endl;
+		cin >> price;
+		cout << "Введите год производства ноутбука: " << endl;
+		cin >> year;
+		lap4[i].set_laptop(model, ram, cpu, price, year);
+	}
+	add_price(lap4, n);
+	Shop store3("RG22", n, 20000, lap4);
+	store3.print_shop(n);
+	n=store3.purchase();
+	store3.print_shop(n);
+	n=store3.sale(n);
+	store3.print_shop(n);
+
+	delete[] lap4;	
 	_getch();
 //	Laptop lapstart("model", 0, 0, 0, 0);	
 //	int n = 20;	
