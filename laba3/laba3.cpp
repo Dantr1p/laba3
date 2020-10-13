@@ -7,7 +7,36 @@
 
 using namespace std;
 #define N 20
-class laptop
+class Shop
+{
+	//Поля объекта
+private:
+	string name;
+	int n;
+	int cash = 0;
+	Laptop laptop;
+	//Методы объекта
+public:
+	Shop()
+	{
+		name = "Обычный магазин";
+		n = 0;
+		cash = 0;
+	};
+	Shop(string name, int n,int cash, Laptop laptop)
+	{
+		this->name = name;
+		this->n = n;
+		this->cash = cash;
+		this->laptop = laptop;
+	};
+	~Shop()
+	{	
+	};
+
+
+};
+class Laptop
 {
 private:
 	string model;	//модель ноутбука
@@ -16,9 +45,9 @@ private:
 	double price;// цена ноутбука
 	int year;// Год производства
 public:
-	laptop();
-	laptop(string model, int ram, int cpu, double price, int year);
-	~laptop();
+	Laptop();
+	Laptop(string model, int ram, int cpu, double price, int year);
+	~Laptop();
 	void set_laptop(string model, int ram, int cpu, double price, int year);
 	void print_laptop();	
 	string getmodel();
@@ -28,7 +57,7 @@ public:
 	double getprice();
 };
 
-laptop::laptop()
+Laptop::Laptop()
 {
 	model = "";
 	RAM_size = 0;
@@ -37,7 +66,7 @@ laptop::laptop()
 	year = 0;
 }
 
-laptop::laptop(string model, int ram, int cpu, double price, int year)
+Laptop::Laptop(string model, int ram, int cpu, double price, int year)
 {
 	this->model = model;
 	RAM_size = ram;
@@ -46,12 +75,12 @@ laptop::laptop(string model, int ram, int cpu, double price, int year)
 	this->year = year;
 }
 
-laptop::~laptop()
+Laptop::~Laptop()
 {
 	
 }
 
-void laptop::set_laptop(string model, int ram, int cpu, double price, int year)
+void Laptop::set_laptop(string model, int ram, int cpu, double price, int year)
 {
 	this->model = model;
 	RAM_size = ram;
@@ -60,7 +89,7 @@ void laptop::set_laptop(string model, int ram, int cpu, double price, int year)
 	this->year = year;
 }
 
-void laptop::print_laptop()
+void Laptop::print_laptop()
 {
 	cout << "Модель ноутбука: " << model << endl;
 	cout << "Объем оперативной памяти: " << RAM_size << endl;
@@ -70,32 +99,32 @@ void laptop::print_laptop()
 
 }
 
-string laptop::getmodel()
+string Laptop::getmodel()
 {
 	return model;
 }
 
-int laptop::getram()
+int Laptop::getram()
 {
 	return RAM_size;
 }
 
-int laptop::getcpu()
+int Laptop::getcpu()
 {
 	return CPU_frequency;
 }
 
-int laptop::getyear()
+int Laptop::getyear()
 {
 	return year;
 }
 
-double laptop::getprice()
+double Laptop::getprice()
 {
 	return price;
 }
 
-void add_price(laptop a[],int n)
+void add_price(Laptop a[],int n)
 {
 	double sumprice = 0;
 	for (int i = 0; i < n; i++)
@@ -105,7 +134,7 @@ void add_price(laptop a[],int n)
 	cout << "Суммарная цена=" << sumprice<< endl;	
 }
 
-void compare_laptop(laptop a[],int  n)
+void compare_laptop(Laptop a[],int  n)
 {
     
 	cout << "*******************************"<<endl;
@@ -176,7 +205,7 @@ void compare_laptop(laptop a[],int  n)
 	cout << "Самый старый ноутбук " << minyear << " г." << endl;
 }
 
-void compare2(laptop a1, laptop a)
+void compare2(Laptop a1, Laptop a)
 {
 	int ram, cpu, year;
 	double price;
@@ -247,7 +276,7 @@ void compare2(laptop a1, laptop a)
 	}
 }
 
-void init(laptop a)
+void init(Laptop a)
 {
 	string model = "";
 	int cpu = 0, ram = 0, year = 0;
@@ -272,12 +301,12 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	laptop lapstart("model", 0, 0, 0, 0);
+	Laptop lapstart("model", 0, 0, 0, 0);
 	
 	
 	int n = 20;	
-	laptop lap[N];   //статическое
-	laptop* lap2 = new laptop[n];    //динамическое
+	Laptop lap[N];   //статическое
+	Laptop* lap2 = new Laptop[n];    //динамическое
 	
 	
 	
@@ -421,9 +450,9 @@ exit:
 	
 	delete[] lap;
 	delete[] lap2;
-	laptop* buffer1 = (laptop*)malloc(10 * sizeof(laptop)),      // выделяем память под 10 элементов массива типа int, с предварительной инициализацией   
-	* buffer2 = (laptop*)calloc(10, sizeof(laptop)),        // выделяем память под 10 элементов массива типа int, без инициализации
-	* buffer3 = (laptop*)realloc(buffer2, 50 * sizeof(laptop));// перераспределить память в блоке buffer2, новый размер блока - 50 элементов
+	Laptop* buffer1 = (Laptop*)malloc(10 * sizeof(Laptop)),      // выделяем память под 10 элементов массива типа int, с предварительной инициализацией   
+	* buffer2 = (Laptop*)calloc(10, sizeof(Laptop)),        // выделяем память под 10 элементов массива типа int, без инициализации
+	* buffer3 = (Laptop*)realloc(buffer2, 50 * sizeof(Laptop));// перераспределить память в блоке buffer2, новый размер блока - 50 элементов
 	free(buffer1);                                              // высвобождаем блок памяти buffer1
 	free(buffer3);
 	return 0;
