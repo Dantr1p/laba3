@@ -116,6 +116,26 @@ public:
 	{
 		return laptop[n];
 	}
+	double getprice(int i)
+	{
+		return laptop[i].getprice();		
+	}
+	int getcpu(int i)
+	{
+		return laptop[i].getcpu();
+	}
+	int getram(int i)
+	{
+		return laptop[i].getram();
+	}
+	int getyear(int i)
+	{
+		return laptop[i].getyear();
+	}
+	string getmodel(int i)
+	{
+		return laptop[i].getmodel();
+	}
 	~Shop()
 	{	
 	};
@@ -175,9 +195,9 @@ public:
 		cout << "\tПродаем" << endl;
 		for (int i = 0; i <= n; i++)
 		{
-			cash += laptop[i].getprice();			
+			cash += this->getprice(i);
 			n -= 1;
-			cout << laptop[i].getmodel()<<" продан!" << endl;
+			cout << this->getmodel(i) <<" продан!" << endl;
 		}
 		n = 0;
 		cout << endl;
@@ -186,12 +206,12 @@ public:
 };
 
 
-void add_price(Laptop a[],int n)
+void add_price(Shop* a, int n)
 {
 	double sumprice = 0;
 	for (int i = 0; i < n; i++)
 	{
-		sumprice =  sumprice +a[i].getprice();
+		sumprice = sumprice + a->getprice(i);
 	}
 	cout << "Суммарная цена=" << sumprice<< endl;	
 }
@@ -199,62 +219,62 @@ void add_price(Laptop a1, Laptop a2)
 {
 	cout << "Суммарная цена=" << a1.getprice() + a2.getprice() << endl;
 }
-void compare(Laptop a[],int  n)
+void compare(Shop* a, int  n)
 {
     
 	cout << "*******************************"<<endl;
 	for (int i = 0; i < n; i++)
 	{
 		
-		cout << "Модель ноутбука: " << a[i].getmodel() << endl;
+		cout << "Модель ноутбука: " << a->getmodel(i) << endl;
 	}
 	cout << "*******************************";
-	double maxprice = a[0].getprice();
-	double minprice = a[0].getprice();
+	double maxprice = a->getprice(0);
+	double minprice = a->getprice(0);
 
-	int maxcpu = a[0].getcpu();
-	int mincpu = a[0].getcpu();
+	int maxcpu = a->getcpu(0);
+	int mincpu = a->getcpu(0);
 
-	int maxram = a[0].getram();
-	int minram = a[0].getram();
+	int maxram = a->getram(0);
+	int minram = a->getram(0);
 
-	int maxyear = a[0].getyear();
-	int minyear = a[0].getyear();
+	int maxyear = a->getyear(0);
+	int minyear = a->getyear(0);
 	
 	for (int i = 0; i < n; i++)
 	{
-		if (a[i].getprice() > maxprice)		
-			maxprice = a[i].getprice();	
+		if (a->getprice(i) > maxprice)
+			maxprice = a->getprice(i);
 		
-		if (a[i].getprice() < minprice) 
-			minprice = a[i].getprice(); 
+		if (a->getprice(i) < minprice)
+			minprice = a->getprice(i);
 	}
 
 	for (int i = 0; i < n; i++)
 	{
-		if (a[i].getcpu() > maxcpu)
-			maxcpu = a[i].getcpu();
+		if (a->getcpu(i) > maxcpu)
+			maxcpu = a->getcpu(i);
 
-		if (a[i].getcpu() < mincpu)
-			mincpu = a[i].getcpu();
+		if (a->getcpu(i) < mincpu)
+			mincpu = a->getcpu(i);
 	}
 
 	for (int i = 0; i < n; i++)
 	{
-		if (a[i].getram() > maxram)
-			maxram = a[i].getram();
+		if (a->getram(i) > maxram)
+			maxram = a->getram(i);
 
-		if (a[i].getram() < minram)
-			minram = a[i].getram();
+		if (a->getram(i) < minram)
+			minram = a->getram(i);
 	}
 
 	for (int i = 0; i < n; i++)
 	{
-		if (a[i].getyear() > maxyear)
-			maxyear = a[i].getyear();
+		if (a->getyear(i) > maxyear)
+			maxyear = a->getyear(i);
 
-		if (a[i].getyear() < minyear)
-			minyear = a[i].getyear();
+		if (a->getyear(i) < minyear)
+			minyear = a->getyear(i);
 	}
 
 	cout << "Самый дорогой ноутбук стоит " <<maxprice<<" р."<<endl;
@@ -378,18 +398,22 @@ int main()
 	compare(store.getlaptop(0), store.getlaptop(1));
 	n=store.sale(n);
 	store.print_shop(n);
+
 	
 	cout  <<endl << "\n\tРабота с динамическими объектами!" << endl;
+	n = 1;
 	Laptop* lap2 = new Laptop("Samsung",8,3500, 80000, 2019);
 		Shop* store1 = new Shop("Svideo", 1, 0, lap2);
 	store1->print_shop(n);
 	n=store1->purchase();
 	store1->print_shop(n);
-	n=store1->sale();
+	add_price(store1->getlaptop(0), store1->getlaptop(1));
+	compare(store1->getlaptop(0), store1->getlaptop(1));
+	n=store1->sale(n);
 	store1->print_shop(n);
 	delete lap2;
 	delete store1;
-	n = 0;
+	
 	cout << endl << "\n\tРабота с массивом статических объектов!" << endl;
 	Laptop lap3[N];
 	cout<<"Введите количество ноутбуков: "<< endl;
@@ -410,15 +434,17 @@ int main()
 	cout << "Введите год производства ноутбука: " << endl;
 	cin >> year;
 	lap3[i].set_laptop(model, ram, cpu, price, year);
-	}
-	add_price(lap3, n);
+	}	
 	Shop* store2= new Shop("DNM", n, 0, lap3);
 	store2->print_shop(n);
 	n=store2->purchase(); //
 	store2->print_shop(n);
-	n=store2->sale(n);
+	add_price(store2, n);
+	compare(store2, n);
+	n=store2->sale(n+2);
 	store2->print_shop(n);	
 	delete store2;
+
 	cout << endl << "\n\tРабота с массивом динамических объектов!" << endl;
 	cout << "Введите количество ноутбуков: " << endl;
 	cin >> n;
@@ -439,170 +465,16 @@ int main()
 		cout << "Введите год производства ноутбука: " << endl;
 		cin >> year;
 		lap4[i].set_laptop(model, ram, cpu, price, year);
-	}
-	add_price(lap4, n);
+	}	
 	Shop store3("RG22", n, 20000, lap4);
 	store3.print_shop(n);
 	n=store3.purchase();
 	store3.print_shop(n);
-	n=store3.sale(n);
+	add_price(&store3, n);
+	compare(&store3, n);
+	n=store3.sale(n+2);
 	store3.print_shop(n);
-
 	delete[] lap4;	
 	_getch();
-//	Laptop lapstart("model", 0, 0, 0, 0);	
-//	int n = 20;	
-//	Laptop lap[N];   //статическое
-//	Laptop* lap2 = new Laptop[n];    //динамическое
-//	
-//	
-//	
-//	string model;
-//	int ram=0, cpu=0, year=0;
-//	double price=0;
-//	do {
-//		system("cls");
-//		cout << "MENU" << endl;
-//		cout << "1. Заполнить данные о ноутбуках(static)" << endl;
-//		cout << "2. Вывести данные (static)" << endl;
-//		cout << "3. Подсчитать стоимость ноутбуков(static)" << endl;
-//		cout << "4. Сравнить два ноутбука(static)" << endl;
-//		cout << "5. Сравнить все ноутбуки (max, min)(static)" << endl;
-//		cout << "6. Ввести данные (dynamic)" << endl;
-//		cout << "7. Вывести данные(dynamic)" << endl;
-//		cout << "8. Подсчитать стоимость ноутбуков(dynamic)" << endl;
-//		cout << "9. Сравнить два ноутбука(dynamic)" << endl;
-//		cout << "0. Сравнить все ноутбуки (max, min)(dynamic)" << endl;
-//		cout << "Backspace. Выход" << endl;
-//		cout << "В какой пункт хотите перейти?" << endl;
-//		switch (_getch())
-//		{
-//		case 49:
-//		{
-//			system("cls");
-//			lapstart.print_laptop();
-//			cout << "Введите количество ноутбуков" << endl;
-//			cin >> n;						
-//			for (int i = 0; i < n; i++)
-//			{
-//				cout << "Введите модель: "  << endl;
-//				cin >> model;
-//				cout << "Введите объем оперативной памяти: " << endl;
-//				cin >> ram;
-//				cout << "Введите частоту процессора: "  << endl;
-//				cin >> cpu;
-//				cout << "Введите цену: "  << endl;
-//				cin >> price;
-//				cout << "Введите год производства: "  << endl;
-//				cin >> year;
-//				lap[i].set_laptop(model, ram, cpu, price, year);
-//			}
-//			break;
-//		}
-//		case 50:
-//		{
-//			system("cls");
-//			for (int i = 0; i < n; i++)
-//			{
-//				lap[i].print_laptop();
-//			}
-//
-//			break;
-//		}
-//		case 51:
-//		{
-//			system("cls");
-//			add_price(lap, n);
-//			break;
-//		}
-//		case 52:
-//		{
-//			int n1, n2;
-//			system("cls");
-//			cout << "Укажите номер первого ноутбука:";
-//			cin >>  n1;
-//			cout << "Укажите номер второго ноутбука:";
-//			cin >> n2;
-//			compare2(lap[n1-1], lap[n2-1]);
-//			break;
-//		}
-//		case 53:
-//		{
-//			system("cls");
-//			compare_laptop(lap, n);
-//			break;
-//		}
-//		case 54:
-//		{
-//			system("cls");
-//			cout << "Введите количество ноутбуков" << endl;
-//			cin >> n;
-//			for (int i = 0; i < n; i++)
-//			{
-//				cout << "Введите модель: " << endl;
-//				cin >> model;
-//				cout << "Введите объем оперативной памяти: " << endl;
-//				cin >> ram;
-//				cout << "Введите частоту процессора: " << endl;
-//				cin >> cpu;
-//				cout << "Введите цену: " << endl;
-//				cin >> price;
-//				cout << "Введите год производства: " << endl;
-//				cin >> year;
-//				lap2[i].set_laptop(model, ram, cpu, price, year);
-//			}
-//			break;
-//		}
-//		case 55:
-//		{
-//			system("cls");
-//			for (int i = 0; i < n; i++)
-//			{
-//				lap2[i].print_laptop();
-//			}
-//		}
-//		case 56:
-//		{
-//			system("cls");
-//			add_price(lap2, n);
-//			break;
-//		}
-//		case 57:
-//		{
-//			int n1, n2;
-//			system("cls");
-//			cout << "Укажите номер первого ноутбука:";
-//			cin >> n1;
-//			cout << "Укажите номер второго ноутбука:";
-//			cin >> n2;
-//			compare2(lap2[n1 - 1], lap2[n2 - 1]);
-//			break;
-//		}
-//		case 48:
-//		{
-//			system("cls");
-//			compare_laptop(lap2, n);
-//			break;
-//		}
-//		case 8:
-//			goto exit;
-//		default:
-//			system("cls");
-//			cout << "Вы выбрали несуществующий вариант" << endl;
-//			cout << "Если хотите выйти, то нажмите ESC. В противном случае перейдёте в MENU" << endl;
-//			break;
-//		}
-//	} while (_getch() != 27);
-//exit:
-//	
-//	delete[] lap;
-//	delete[] lap2;
-//	Laptop* buffer1 = (Laptop*)malloc(10 * sizeof(Laptop)),      // выделяем память под 10 элементов массива типа int, с предварительной инициализацией   
-//	* buffer2 = (Laptop*)calloc(10, sizeof(Laptop)),        // выделяем память под 10 элементов массива типа int, без инициализации
-//	* buffer3 = (Laptop*)realloc(buffer2, 50 * sizeof(Laptop));// перераспределить память в блоке buffer2, новый размер блока - 50 элементов
-//	free(buffer1);                                              // высвобождаем блок памяти buffer1
-//	free(buffer3);
-	
-
 }
 
